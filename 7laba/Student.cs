@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Laba7.Student;
 
 namespace Laba7
 {
@@ -45,6 +46,10 @@ namespace Laba7
         public bool isBad()
         {
             return Mark == 2;
+        }
+        public override string ToString()
+        {
+            return $"{Subject}:{Mark}";
         }
 
     }

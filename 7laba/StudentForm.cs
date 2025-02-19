@@ -100,9 +100,14 @@ namespace Laba7
         // Метод для сохранения данных студента
         private bool SaveStudent()
         {
+            if (textBoxFIO.Text == "")
+            {
+                MessageBox.Show("Введите ФИО студента", "Ошибка в ФИО студента", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             student.FIO = textBoxFIO.Text;
             var group = textBoxGroup.Text;
-            if (group[0] == '0') 
+            if (group == "" || group[0] == '0') 
             {
                 MessageBox.Show("Номер группы является положительным числом", "Ошибка в номере группы", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -130,6 +135,11 @@ namespace Laba7
             for (var i = 0; i < examNum; ++i)
             {
                 student.Exams[i] = new Exam(); // Создаем новый объект экзамена
+                if (academPerfomanceGrid.Rows[i].Cells[2].Value == null)
+                {
+                    MessageBox.Show($"Введите название экзамена в ячейке {i}:{2}", "Ошибка в заполнении экзаменов", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
                 string s = academPerfomanceGrid.Rows[i].Cells[2].Value.ToString(); // Получаем название предмета
                 if (s == String.Empty) // Проверяем, что название предмета не пустое
                 {
@@ -154,6 +164,11 @@ namespace Laba7
         {
             int course = Convert.ToInt32(((RadioButton)sender).Text); // Получаем выбранный курс
             int examNum = course * Student.CountExams * 2; // Рассчитываем количество экзаменов для выбранного курса
+            for (var i = academPerfomanceGrid.Rows.Count; i > examNum; --i) // Очищаем таблицу успеваемости
+            {
+                DataGridViewRow row = academPerfomanceGrid.Rows[i-1];
+                academPerfomanceGrid.Rows.Remove(row); 
+            }
 
             // Добавляем строки в таблицу, если их недостаточно
             for (var i = academPerfomanceGrid.Rows.Count; i < examNum; ++i)

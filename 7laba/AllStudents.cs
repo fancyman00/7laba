@@ -72,7 +72,7 @@ namespace Laba7
             {
                 // Записываем каждый объект студента в файл
                 foreach (var student in Students)
-                    sw.WriteLine(student);
+                    sw.WriteLine(student.ToString());
             }
         }
 
